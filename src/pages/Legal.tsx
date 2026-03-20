@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
-import Navbar from "@/components/Navbar";
+import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 
 const stones = [
@@ -37,10 +37,10 @@ const Legal = () => {
 
   return (
     <>
-      <Navbar />
+      <Navigation />
       <main>
         {/* Hero */}
-        <section className="bg-navy text-primary-foreground py-24 md:py-32">
+        <section className="bg-gulf-navy text-primary-foreground py-24 md:py-32">
           <div className="container mx-auto px-4 max-w-3xl text-center">
             <motion.h1
               initial={{ opacity: 0, y: 24 }}
@@ -109,7 +109,7 @@ const Legal = () => {
         </section>
 
         {/* Prompt Guide — Email Capture */}
-        <section id="prompt-guide" className="bg-navy text-primary-foreground py-20 md:py-28">
+        <section id="prompt-guide" className="bg-gulf-navy text-primary-foreground py-20 md:py-28">
           <div className="container mx-auto px-4 max-w-2xl text-center">
             <h2 className="font-display font-extrabold text-3xl md:text-4xl mb-4">Prompt Guide </h2>
             <p className="font-body text-primary-foreground/80 text-lg mb-8">
@@ -142,7 +142,7 @@ const Legal = () => {
         </section>
 
         {/* Closing */}
-        <section className="bg-steel text-primary-foreground py-20 md:py-24">
+        <section className="bg-gulf-blue text-primary-foreground py-20 md:py-24">
         </section>
       </main>
       <Footer />
