@@ -3,15 +3,15 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Lock, Eye, EyeOff } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
-import { supabase } from '@/integrations/supabase/client';
 
 interface PasswordProtectionProps {
   children: React.ReactNode;
-  resourceKey: string;
   storageKey: string;
 }
 
-const PasswordProtection = ({ children, resourceKey, storageKey }: PasswordProtectionProps) => {
+const CORRECT_PASSWORD = import.meta.env.VITE_LAB_PASSWORD ?? 'Jackson Capital';
+
+const PasswordProtection = ({ children, storageKey }: PasswordProtectionProps) => {
   const [password, setPassword] = useState('');
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -20,10 +20,8 @@ const PasswordProtection = ({ children, resourceKey, storageKey }: PasswordProte
   const { toast } = useToast();
 
   useEffect(() => {
-    const savedToken = sessionStorage.getItem(storageKey);
-    if (savedToken) {
-      setIsAuthenticated(true);
-    }
+    const saved = sessionStorage.getItem(storageKey);
+    if (saved === 'authenticated') setIsAuthenticated(true);
     setIsLoading(false);
   }, [storageKey]);
 
@@ -31,37 +29,19 @@ const PasswordProtection = ({ children, resourceKey, storageKey }: PasswordProte
     e.preventDefault();
     setIsSubmitting(true);
 
-    try {
-      const { data, error } = await supabase.functions.invoke('verify-password', {
-        body: { resource: resourceKey, password }
-      });
+    // Small delay so it doesn't feel instant / brute-forceable
+    await new Promise(r => setTimeout(r, 400));
 
-      if (error) throw error;
-
-      if (data?.valid && data?.token) {
-        setIsAuthenticated(true);
-        sessionStorage.setItem(storageKey, data.token);
-        toast({
-          title: "Access granted",
-          description: "Welcome!",
-        });
-      } else {
-        toast({
-          title: "Access denied",
-          description: "Incorrect password",
-          variant: "destructive",
-        });
-        setPassword('');
-      }
-    } catch (err) {
-      toast({
-        title: "Error",
-        description: "Unable to verify password. Please try again.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsSubmitting(false);
+    if (password === CORRECT_PASSWORD) {
+      sessionStorage.setItem(storageKey, 'authenticated');
+      setIsAuthenticated(true);
+      toast({ title: 'Access granted', description: 'Welcome!' });
+    } else {
+      toast({ title: 'Access denied', description: 'Incorrect password', variant: 'destructive' });
+      setPassword('');
     }
+
+    setIsSubmitting(false);
   };
 
   if (isLoading) {
@@ -81,11 +61,11 @@ const PasswordProtection = ({ children, resourceKey, storageKey }: PasswordProte
             <h1 className="text-2xl font-bold tracking-tight mb-2">Protected Access</h1>
             <p className="text-muted-foreground">This area is password protected</p>
           </div>
-          
+
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="relative">
               <Input
-                type={showPassword ? "text" : "password"}
+                type={showPassword ? 'text' : 'password'}
                 placeholder="Enter password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -98,11 +78,7 @@ const PasswordProtection = ({ children, resourceKey, storageKey }: PasswordProte
                 onClick={() => setShowPassword(!showPassword)}
                 className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
               >
-                {showPassword ? (
-                  <EyeOff className="h-4 w-4" />
-                ) : (
-                  <Eye className="h-4 w-4" />
-                )}
+                {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
               </button>
             </div>
             <Button type="submit" className="w-full" disabled={isSubmitting}>

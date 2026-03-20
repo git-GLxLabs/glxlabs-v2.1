@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { supabase } from '@/integrations/supabase/client'
 import { useToast } from '@/hooks/use-toast'
 
 interface ContactFormData {
@@ -8,40 +7,47 @@ interface ContactFormData {
   message: string
 }
 
+// Web3Forms public access key — safe to expose in frontend
+// Get your own free at https://web3forms.com
+const WEB3FORMS_KEY = import.meta.env.VITE_WEB3FORMS_KEY ?? '7b9c2e4d-f1a3-4b8e-9c2d-e5f6a7b8c9d0'
+
 export const useContactForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const { toast } = useToast()
 
   const submitContactForm = async (formData: ContactFormData) => {
     setIsSubmitting(true)
-    
-    
+
     try {
-      // Call the edge function instead of direct database insert
-      const { data, error } = await supabase.functions.invoke('contact-form', {
-        body: {
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          access_key: WEB3FORMS_KEY,
           name: formData.name,
           email: formData.email,
-          message: formData.message
-        }
+          message: formData.message,
+          subject: 'GLxLabs.com — New Message',
+          from_name: 'GLxLabs Contact Form',
+        }),
       })
 
-      if (error) {
-        throw error
+      const result = await response.json()
+
+      if (result.success) {
+        toast({
+          title: 'Message sent!',
+          description: "We'll get back to you within 24 hours.",
+        })
+        return true
+      } else {
+        throw new Error(result.message)
       }
-
+    } catch {
       toast({
-        title: "Message sent!",
-        description: "We'll get back to you within 24 hours.",
-      })
-      
-      return true
-    } catch (error) {
-      // Error details intentionally omitted from client logs
-      toast({
-        title: "Error sending message",
-        description: "Please try again or contact us directly.",
-        variant: "destructive"
+        title: 'Error sending message',
+        description: 'Please try again or contact us directly.',
+        variant: 'destructive',
       })
       return false
     } finally {
@@ -49,8 +55,5 @@ export const useContactForm = () => {
     }
   }
 
-  return {
-    submitContactForm,
-    isSubmitting
-  }
+  return { submitContactForm, isSubmitting }
 }

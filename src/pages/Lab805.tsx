@@ -5,10 +5,7 @@ import PasswordProtection from '@/components/PasswordProtection';
 
 const Lab805 = () => {
   return (
-    <PasswordProtection 
-      resourceKey="lab805" 
-      storageKey="lab805_access"
-    >
+    <PasswordProtection storageKey="lab805_access">
     <div className="min-h-screen bg-background">
       {/* Header */}
       <header className="border-b border-border">

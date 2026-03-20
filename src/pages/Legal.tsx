@@ -2,7 +2,6 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { supabase } from "@/integrations/supabase/client";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 
@@ -22,10 +21,18 @@ const Legal = () => {
     e.preventDefault();
     setSending(true);
     try {
-      const { error } = await supabase.functions.invoke("send-contact-email", {
-        body: { email, subject: "Legal Page — Prompt Guide Request", type: "prompt-guide" }
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          access_key: import.meta.env.VITE_WEB3FORMS_KEY ?? "",
+          email,
+          subject: "Legal Page — Prompt Guide Request",
+          from_name: "GLxLabs Legal Page",
+        }),
       });
-      if (error) throw error;
+      const result = await res.json();
+      if (!result.success) throw new Error(result.message);
       toast.success("You're on the list! Check your inbox after the session.");
       setEmail("");
     } catch {
