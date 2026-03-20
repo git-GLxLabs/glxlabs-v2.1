@@ -21,7 +21,8 @@ const Navigation = () => {
     { label: 'Contact', href: '#contact' },
   ];
 
-  const labNavItem = { label: 'See the Lab', href: '#lab805' };
+  const labNavItem = { label: 'Lab 805', href: '#lab805' };
+  const legalNavItem = { label: 'Legal', href: '/legal' };
 
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
@@ -30,7 +31,7 @@ const Navigation = () => {
       <div className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           {/* Logo with Gulf Racing Orange */}
-          <a href="#" className="text-2xl font-bold tracking-tight">
+          <a href="/" className="text-2xl font-bold tracking-tight">
             GLx<span className="text-gulf-orange">Labs</span>
           </a>
 
@@ -67,13 +68,20 @@ const Navigation = () => {
               </div>
               
               {/* Lab navigation with special treatment */}
-              <div>
+              <div className="flex flex-col space-y-4">
                 <a
                   href={labNavItem.href}
                   className="text-lg font-bold tracking-wide text-gulf-orange hover:text-gulf-navy transition-colors duration-200 bg-gulf-orange/10 px-3 py-2 rounded border-l-4 border-gulf-orange"
                   onClick={() => setIsOpen(false)}
                 >
                   {labNavItem.label}
+                </a>
+                <a
+                  href={legalNavItem.href}
+                  className="text-lg font-bold tracking-wide text-gulf-orange hover:text-gulf-navy transition-colors duration-200 bg-gulf-orange/10 px-3 py-2 rounded border-l-4 border-gulf-orange"
+                  onClick={() => setIsOpen(false)}
+                >
+                  {legalNavItem.label}
                 </a>
               </div>
             </div>
