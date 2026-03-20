@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preload" href="/src/assets/hero-bg.jpg" as="image" fetchpriority="high" />
+    <script>
+      // Load fonts asynchronously to avoid render blocking
+      const fontLink = document.createElement('link');
+      fontLink.href = 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap';
+      fontLink.rel = 'stylesheet';
+      document.head.appendChild(fontLink);
+    </script>
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"></noscript>
+    <script>
+      (function() {
+        var isLegal = window.location.hostname.startsWith('legal.');
+        document.title = isLegal ? 'GLxLabs — Legal' : 'GLxLabs - A Romper Room of Ideas';
+        var metas = {
+          description: isLegal
+            ? 'Legal information for GLxLabs — Terms of Service, Privacy Policy, and more.'
+            : 'GLxLabs blends editorial craft with automation, helping studios, agencies, and creators scale great content.',
+          'og:title': isLegal ? 'GLxLabs — Legal' : 'GLxLabs - AI-Enhanced Storytelling',
+          'og:description': isLegal
+            ? 'Legal information for GLxLabs — Terms of Service, Privacy Policy, and more.'
+            : 'GLxLabs blends editorial craft with automation, helping studios, agencies, and creators scale great content.',
+          'og:type': 'website',
+          'og:image': 'https://lovable.dev/opengraph-image-p98pqg.png',
+          'twitter:card': 'summary_large_image',
+          'twitter:image': 'https://lovable.dev/opengraph-image-p98pqg.png'
+        };
+        Object.keys(metas).forEach(function(key) {
+          var meta = document.createElement('meta');
+          if (key.startsWith('og:')) { meta.setAttribute('property', key); }
+          else if (key.startsWith('twitter:')) { meta.setAttribute('name', key); }
+          else { meta.setAttribute('name', key); }
+          meta.setAttribute('content', metas[key]);
+          document.head.appendChild(meta);
+        });
+      })();
+    </script>
+    <meta name="author" content="GLxLabs" />
+  </head>
+
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

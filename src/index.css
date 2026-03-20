@@ -1,0 +1,217 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* GLxLabs Design System - Gulf Racing inspired palette
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* Gulf Racing Color Palette */
+    --gulf-blue: 196 45% 55%;        /* Gulf signature blue */
+    --gulf-orange: 25 100% 55%;      /* Gulf signature orange */
+    --gulf-navy: 210 50% 25%;        /* Deep navy accent */
+    --gulf-light: 195 25% 85%;       /* Light blue background */
+    --gulf-cream: 45 25% 96%;        /* Cream white */
+    
+    /* Core system colors */
+    --background: 0 0% 100%;
+    --foreground: 210 50% 25%;       /* Gulf navy for text */
+    
+    /* Pure contrast system */
+    --pure-black: 0 0% 0%;
+    --pure-white: 0 0% 100%;
+    --gray-50: 195 15% 97%;
+    --gray-100: 195 12% 94%;
+    --gray-200: 195 10% 87%;
+    --gray-300: 195 8% 75%;
+    --gray-400: 195 6% 60%;
+    --gray-500: 195 5% 45%;
+    --gray-600: 195 8% 30%;
+    --gray-700: 195 12% 20%;
+    --gray-800: 195 15% 12%;
+    --gray-900: 210 50% 25%;         /* Gulf navy */
+
+    /* Component tokens */
+    --card: 0 0% 100%;
+    --card-foreground: 210 50% 25%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 210 50% 25%;
+
+    --primary: 196 45% 55%;          /* Gulf blue */
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 195 25% 85%;        /* Light gulf blue */
+    --secondary-foreground: 210 50% 25%;
+
+    --muted: 195 15% 94%;
+    --muted-foreground: 195 5% 45%;
+
+    --accent: 25 100% 55%;           /* Gulf orange */
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 0 0% 87%;
+    --input: 0 0% 94%;
+    --ring: 0 0% 8%;
+
+    --radius: 0.5rem;
+
+    --sidebar-background: 0 0% 98%;
+
+    --sidebar-foreground: 240 5.3% 26.1%;
+
+    --sidebar-primary: 240 5.9% 10%;
+
+    --sidebar-primary-foreground: 0 0% 98%;
+
+    --sidebar-accent: 240 4.8% 95.9%;
+
+    --sidebar-accent-foreground: 240 5.9% 10%;
+
+    --sidebar-border: 220 13% 91%;
+
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    /* Dark mode - Gulf racing dark variant */
+    --background: 210 50% 8%;        /* Dark gulf navy */
+    --foreground: 195 25% 90%;
+
+    --card: 210 40% 12%;
+    --card-foreground: 195 25% 90%;
+
+    --popover: 210 50% 8%;
+    --popover-foreground: 195 25% 90%;
+
+    --primary: 196 55% 65%;          /* Brighter gulf blue for dark mode */
+    --primary-foreground: 210 50% 8%;
+
+    --secondary: 210 30% 20%;
+    --secondary-foreground: 195 25% 90%;
+
+    --muted: 210 40% 12%;
+    --muted-foreground: 195 15% 60%;
+
+    --accent: 25 100% 60%;           /* Brighter gulf orange for dark mode */
+    --accent-foreground: 210 50% 8%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 0 0% 20%;
+    --input: 0 0% 12%;
+    --ring: 0 0% 97%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Typography scale inspired by Pixlspace */
+  h1 {
+    @apply text-6xl md:text-8xl font-bold tracking-tight leading-[0.9];
+  }
+
+  h2 {
+    @apply text-4xl md:text-6xl font-bold tracking-tight leading-[0.95];
+  }
+
+  h3 {
+    @apply text-2xl md:text-4xl font-bold tracking-tight;
+  }
+
+  h4 {
+    @apply text-xl md:text-2xl font-semibold tracking-tight;
+  }
+
+  /* Utility classes for animations */
+  .fade-in {
+    animation: fadeIn 0.8s ease-out forwards;
+  }
+
+  .slide-up {
+    animation: slideUp 0.8s ease-out forwards;
+  }
+
+  .stagger-delay {
+    animation-delay: 0.2s;
+  }
+
+  /* Cursor interactions */
+  .cursor-hover {
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .cursor-hover:hover {
+    transform: translateY(-2px);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Horizontal scroll section styles */
+.horizontal-scroll-container {
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.horizontal-scroll-container::-webkit-scrollbar {
+  display: none;
+}
+
+/* Custom button styles */
+.btn-primary {
+  @apply bg-primary text-primary-foreground border border-primary hover:bg-primary/90 transition-all duration-300;
+}
+
+.btn-outline {
+  @apply bg-transparent text-foreground border border-foreground hover:bg-foreground hover:text-background transition-all duration-300;
+}
