@@ -68,13 +68,20 @@ const Navigation = () => {
               </div>
               
               {/* Lab navigation with special treatment */}
-              <div>
+              <div className="flex flex-col space-y-4">
                 <a
                   href={labNavItem.href}
                   className="text-lg font-bold tracking-wide text-gulf-orange hover:text-gulf-navy transition-colors duration-200 bg-gulf-orange/10 px-3 py-2 rounded border-l-4 border-gulf-orange"
                   onClick={() => setIsOpen(false)}
                 >
                   {labNavItem.label}
+                </a>
+                <a
+                  href={legalNavItem.href}
+                  className="text-lg font-bold tracking-wide text-gulf-orange hover:text-gulf-navy transition-colors duration-200 bg-gulf-orange/10 px-3 py-2 rounded border-l-4 border-gulf-orange"
+                  onClick={() => setIsOpen(false)}
+                >
+                  {legalNavItem.label}
                 </a>
               </div>
             </div>
