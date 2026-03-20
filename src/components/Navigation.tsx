@@ -21,7 +21,8 @@ const Navigation = () => {
     { label: 'Contact', href: '#contact' },
   ];
 
-  const labNavItem = { label: 'See the Lab', href: '#lab805' };
+  const labNavItem = { label: 'Lab 805', href: '#lab805' };
+  const legalNavItem = { label: 'Legal', href: '/legal' };
 
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
